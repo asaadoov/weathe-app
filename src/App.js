@@ -12,7 +12,19 @@ export default class App extends Component {
     country: undefined,
     humidity: undefined,
     description: undefined,
-    error: undefined
+    error: undefined,
+    degree: "C"
+  };
+
+  getDegree = () => {
+    let degree = this.state.degree === "F" ? "C" : "F";
+    let temperature = this.state.temperature;
+    temperature =
+      degree === "F"
+        ? temperature * (9 / 5) + 32
+        : (temperature - 32) / (9 / 5);
+
+    this.setState({ degree, temperature });
   };
 
   getWeather = async e => {
@@ -22,7 +34,7 @@ export default class App extends Component {
     const city = e.target.elements.city.value;
     const country = e.target.elements.country.value;
 
-    const url = `api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${apiKey}&units=metric`;
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${apiKey}&units=metric`;
 
     // get the data from the api
     const data = await fetch(url).then(res => res.json());
@@ -49,21 +61,43 @@ export default class App extends Component {
   };
 
   render() {
-    const { getWeather, state } = this;
-    const { temperature, city, country, humidity, description, error } = state;
+    const { getWeather, state, getDegree } = this;
+    const {
+      temperature,
+      city,
+      country,
+      humidity,
+      description,
+      error,
+      degree
+    } = state;
 
     return (
       <div>
-        <Titles />
-        <Form getWeather={getWeather} />
-        <Weather
-          temperature={temperature}
-          city={city}
-          country={country}
-          humidity={humidity}
-          description={description}
-          error={error}
-        />
+        <div className="wrapper">
+          <div className="main">
+            <div className="container">
+              <div className="row">
+                <div className="col-sx-5 title-container">
+                  <Titles />
+                </div>
+                <div className="col-sx-7 form-container">
+                  <Form getWeather={getWeather} />
+                  <Weather
+                    getDegree={getDegree}
+                    temperature={temperature}
+                    city={city}
+                    country={country}
+                    humidity={humidity}
+                    description={description}
+                    error={error}
+                    degree={degree}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

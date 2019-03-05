@@ -6,20 +6,43 @@ const Weather = ({
   country,
   humidity,
   description,
-  error
+  error,
+  getDegree,
+  degree
 }) => (
-  <div>
+  <div className="weather__info">
     {city && country && (
-      <div>
-        <p>
-          Location: {city},{country}
-        </p>
-        <p>Temperatur: {temperature}</p>
-        <p>Humidity: {humidity}</p>
-        <p>Conditions: {description}</p>
-      </div>
+      <p className="weather__key">
+        Location:{" "}
+        <span className="weather__value">
+          {city},{country}
+        </span>
+      </p>
     )}
-    {error && <p> {error}</p>}
+    {temperature && (
+      <p className="weather__key">
+        Temperatur:{" "}
+        <span className="weather__value degree-section" onClick={getDegree}>
+          {temperature}
+          <span className="degree">{degree}</span>
+        </span>
+      </p>
+    )}
+    {humidity && (
+      <p className="weather__key">
+        Humidity: <span className="weather__value"> {humidity}</span>
+      </p>
+    )}
+    {description && (
+      <p className="weather__key">
+        Description: <span className="weather__value"> {description}</span>
+      </p>
+    )}
+    {error && (
+      <p className="weather__error">
+        Error: <span className="weather__value"> {error}</span>
+      </p>
+    )}
   </div>
 );
 

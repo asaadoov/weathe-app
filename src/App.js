@@ -22,7 +22,7 @@ export default class App extends Component {
     const city = e.target.elements.city.value;
     const country = e.target.elements.country.value;
 
-    const url = `http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${apiKey}&units=metric`;
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${apiKey}&units=metric`;
 
     // get the data from the api
     const data = await fetch(url).then(res => res.json());

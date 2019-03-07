@@ -21,8 +21,8 @@ export default class App extends Component {
     let temperature = this.state.temperature;
     temperature =
       degree === "F"
-        ? temperature * (9 / 5) + 32
-        : (temperature - 32) / (9 / 5);
+        ? parseInt(temperature * (9 / 5) + 32)
+        : parseInt((temperature - 32) / (9 / 5));
 
     this.setState({ degree, temperature });
   };
@@ -42,11 +42,13 @@ export default class App extends Component {
     if (city && country) {
       // update the states
       this.setState({
-        temperature: data.main.temp,
+        temperature: parseInt(data.main.temp),
         city: data.name,
         country: data.sys.country,
         humidity: data.main.humidity,
-        description: data.weather[0].description
+        description: data.weather[0].description,
+        degree: "C",
+        error: undefined
       });
     } else {
       this.setState({

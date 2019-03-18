@@ -15,6 +15,9 @@ export default class App extends Component {
     error: undefined,
     degree: "C"
   };
+  componentDidMount() {
+    this.toggle();
+  }
 
   getDegree = () => {
     let degree = this.state.degree === "F" ? "C" : "F";
